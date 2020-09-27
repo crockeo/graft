@@ -23,10 +23,10 @@ approaches have one of two problems:
   objects. Parts of the program can be rewritten as a self-contained graph and subsequently added to a larger graph as a
   migration continues.
 
-* Aggressively decoupling code from its execution order; many of the inefficiencies from IO-bound systems come from the
-  fact that the medium by which we describe a program is procedural. In practice, the concept we're trying to relay is
-  often instead atomic pieces of work that depend on the results of earlier work. The trick here is that _not all pieces
-  of work that happen later depend on all pieces of work that happen earlier_.
+* Aggressively decoupling code from its execution order; many of the inefficiencies from IO-bound systems come from
+  overhead encouraged by a procedural language. In practice programmers are often trying to describe a system of
+  dependent IO operations. By offloading thework of scheduling an executing these operations, programmers can increase
+  the parallelism of their IO waits.
 
 ## Installation
 
