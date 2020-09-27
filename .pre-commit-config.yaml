@@ -32,4 +32,4 @@ repos:
     hooks:
     -   id: black
         language_version: python3
-        require_serial: true # https://github.com/ambv/black/issues/673
+        args: ['--line-length=100']
