@@ -38,6 +38,15 @@ $ cd graft
 $ pip install .
 ```
 
+## Contributing
+
+We'll have more here soon, but:
+
+* probably use `virtualenv`! this is written on Python 3.8 and you might not want to install that on your system
+  directly
+
+* please install [pre-commit](https://pre-commit.com/), and do `pre-commit install` in the repo directory
+
 ## License
 
 [MIT Open Source](/LICENSE)
