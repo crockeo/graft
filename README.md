@@ -10,7 +10,8 @@ if Python is used, it is used as a glue that binds together other components of 
 switch from a CPU-bound workload to an IO-bound workload.
 
 There are myriad existing approaches to extracting more performance out of IO-bound workloads in Python, like the [built
-in async](TODO), [gevent](TODO), and others. In general, these approaches have one of two problems:
+in asyncio](https://docs.python.org/3/library/asyncio.html), [gevent](https://gevent.org), and others. In general, these
+approaches have one of two problems:
 
 * They require that you aggressively buy in to their specific async system
 
