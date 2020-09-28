@@ -39,33 +39,36 @@ class Node(Generic[NodeVal]):
 class Graph(Generic[T]):
     nodes: Dict[str, Node]
     dependencies: Dict[Node, Set[Node]]
-    terminal_node: Node[T]
 
     def __init__(self):
         self.nodes = {}
         self.dependencies = {}
+        self.terminal_node = None
 
-    def node(self, work: Callable[..., T]) -> Node[T]:
-        name = work.__name__
-        dependencies = set()
+    def node(self, *, terminal=False) -> Callable[[Callable[..., NodeVal]], Node[NodeVal]]:
+        def _node(work: Callable[..., NodeVal]) -> Node[NodeVal]:
+            name = work.__name__
+            dependencies = set()
 
-        args = inspect.getfullargspec(work)[0]
-        for arg in args:
-            if arg not in self.nodes:
-                # TODO(crockeo): populate this with something meaningful
-                raise KeyError()
-            dependencies.add(self.nodes[arg])
+            args = inspect.getfullargspec(work)[0]
+            for arg in args:
+                if arg not in self.nodes:
+                    # TODO(crockeo): populate this with something meaningful
+                    raise KeyError()
+                dependencies.add(self.nodes[arg])
 
-        n = Node(work.__name__, work)
-        self.nodes[name] = n
-        self.dependencies[n] = dependencies
+            n = Node(work.__name__, work)
+            self.nodes[name] = n
+            self.dependencies[n] = dependencies
+            if terminal:
+                if self.terminal_node is not None:
+                    # TODO(crockeo): more informative error
+                    raise Exception()
+                self.terminal_node = n
 
-        return n
+            return n
 
-    def result(self, work: Callable[..., T]) -> Node[T]:
-        n = self.node(work)
-        self.terminal_node = n
-        return n
+        return _node
 
 
 class Executor(ABC):
