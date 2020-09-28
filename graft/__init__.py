@@ -84,6 +84,9 @@ class GreenletExecutor(Executor):
         self.pool = gevent.pool.Pool(worker_count)
 
     def __call__(self, graph: Graph[T]) -> T:
+        # FYI: if you're reading this I know that this section of code is abysmal, and I just
+        # haven't gotten around to fixing it yet. Don't worry :)
+
         return_values: Dict[Node, Any] = {}
         not_run: Set[Node] = set(graph.nodes.values())
         can_run = [node for node in not_run if not graph.dependencies[node]]
